@@ -10,30 +10,48 @@ import java.util.Scanner;
 /** This class takes String input plus,minus,divide and times
  * from user and execute the arithmetic operation
  * change the code to use enum instead String and mention the advantage of enum.
- * @author sivagamasrinivasan
+ * @author sanjeev paudel
  * 
  */
-public class ArithmeticBase 
-{
- public double x,y;
-    double calculate(double x, double y) 
-        {
-        Scanner sc =new Scanner(System.in);
-        System.out.println("Enter arithmetic operation to Perform: ");
-        String s= sc.next();
-        switch (s.toUpperCase()) 
-        {
-            case "PLUS":
+public class ArithmeticBase {
+    public double x, y;
+
+    public enum Operation {
+        PLUS,
+        MINUS,
+        TIMES,
+        DIVIDE
+    }
+
+    public double calculate(double x, double y, Operation operation) {
+        switch (operation) {
+            case PLUS:
                 return x + y;
-            case "MINUS":
+            case MINUS:
                 return x - y;
-            case "TIMES":
+            case TIMES:
                 return x * y;
-            case "DIVIDE":
+            case DIVIDE:
                 return x / y;
             default:
-                throw new AssertionError("Unknown operations " + this);
+                throw new AssertionError("Unknown operation " + operation);
         }
     }
-   
+
+    public static void main(String[] args) {
+        ArithmeticBase arithmetic = new ArithmeticBase();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter the first number: ");
+        double x = sc.nextDouble();
+
+        System.out.println("Enter the second number: ");
+        double y = sc.nextDouble();
+
+        System.out.println("Enter arithmetic operation to Perform (PLUS, MINUS, TIMES, DIVIDE): ");
+        ArithmeticBase.Operation operation = ArithmeticBase.Operation.valueOf(sc.next().toUpperCase());
+
+        double result = arithmetic.calculate(x, y, operation);
+        System.out.println("Result: " + result);
+    }
 }
